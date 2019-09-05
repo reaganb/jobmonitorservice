@@ -1,10 +1,13 @@
-from flask_migrate import Migrate
-from config import db, connex_app
+# from flask_migrate import Migrate
+# from config import db, connex_app
+from config import connex_app
 
 
-Migrate = Migrate(connex_app.app, db)
+# Migrate = Migrate(connex_app.app, db)
 connex_app.add_api("swagger.yml")
 
-if __name__ == "__main__":
+def run():
+    connex_app.run(debug=True,port=5005)
 
-    connex_app.run(debug=True)
+if __name__ == "__main__":
+    run()

@@ -1,7 +1,13 @@
 from flask import make_response, abort
-from app.models import Modulelog, ModulelogSchema
-from config import get_timestamp, db
+# from app.models import Modulelog, ModulelogSchema
+# from config import get_timestamp, db
+from config import get_timestamp
 
+def index():
+    data = {
+        "HELLO":"WORLD"
+    }
+    return data
 
 def create_job(job):
 

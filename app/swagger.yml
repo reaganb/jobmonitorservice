@@ -11,6 +11,9 @@ produces:
 basePath: /api
 
 paths:
+  /index:
+    get:
+        operationId: views.index
   /jobs:
     get:
       operationId: views.read_job_all
