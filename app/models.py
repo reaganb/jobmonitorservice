@@ -11,6 +11,7 @@ class Modulelog(db.Model):
     state = db.Column(db.String)
     timestamp = db.Column(db.String, default=get_timestamp())
 
+
 class ModulelogSchema(ma.ModelSchema):
     class Meta:
         model = Modulelog

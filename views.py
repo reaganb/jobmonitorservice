@@ -3,31 +3,8 @@ from app.models import Modulelog, ModulelogSchema
 from config import get_timestamp, db
 
 
-JOBS = {
-    "a1": {
-        "job_id": "a1",
-        "app_name": "app1",
-        "state": "STARTED",
-        "timestamp": get_timestamp(),
-    },
-    "a2": {
-        "job_id": "a2",
-        "app_name": "app2",
-        "state": "FINISHED",
-        "timestamp": get_timestamp(),
-    },
-    "a3": {
-        "job_id": "a3",
-        "app_name": "app3",
-        "state": "ERROR",
-        "timestamp": get_timestamp(),
-    },
-
-}
-
 def create_job(job):
 
-    # app_name = job_id.get("app_name",None)
     state = job.get("state", None)
     app_name = job.get("app_name", None)
     job_id = job.get("job_id", None)
@@ -36,10 +13,8 @@ def create_job(job):
         Modulelog.query.filter(Modulelog.job_id == job_id)
         .one_or_none()
     )
-    print(type(existing_job))
 
     if existing_job is None:
-        print("Not exist!")
         schema = ModulelogSchema()
         new_job = Modulelog(job_id=job_id, state=state, app_name=app_name)
 
@@ -86,17 +61,16 @@ def update_job(job_id, job):
         Modulelog.job_id == job_id
     ).one_or_none()
 
-    data = {}
     if update_job:
         schema = ModulelogSchema()
-        update = schema.load(job, session=db.session).data
+        update = schema.load(job, session=db.session, instance=update_job)
 
         update.job_id = update_job.job_id
 
         db.session.merge(update)
         db.session.commit()
 
-        data = schema.dump(update_job).data
+        data = schema.dump(update)
 
         return data, 200
 
