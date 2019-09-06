@@ -1,13 +1,17 @@
 from config import ma, db, get_timestamp
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
+import os
+
+DB_SCHEMA = os.environ['DB_SCHEMA']
+
 
 class Modulelog(db.Model):
     """
     The Modulelog table
     """
     __tablename__ = 'modulelog'
-    __table_args__ = {'schema': 'modulelog'}
+    __table_args__ = {'schema': DB_SCHEMA}
     id = db.Column(db.Integer, primary_key=True)
     job_id = db.Column(UUID(as_uuid=True), default=uuid4, index=True)
     app_name = db.Column(db.String, nullable=False)
