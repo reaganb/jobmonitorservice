@@ -8,4 +8,7 @@ db = SQLAlchemy(connex_app.app)
 ma = Marshmallow(connex_app.app)
 
 def get_timestamp():
+    """
+    Returns the current time in
+    """
     return datetime.now().strftime(("%Y-%m-%d %H:%M:%S"))
