@@ -3,15 +3,17 @@ FROM python
 ENV DB_PORT 5432
 ENV DB_TYPE postgresql
 ENV DB_USER postgres
-ENV DB_HOST host.docker.internal
+ENV DB_HOST "10.0.2.2"
 ENV DB_PASSWORD nopassword
-ENV DB_NAME modulelog
-ENV DB_SCHEMA modulelog
+ENV DB_NAME fileservice_db
 
-ADD . /app
-WORKDIR /app
+ADD . /server
+WORKDIR /server
+
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
-EXPOSE 8000
+RUN pip install python-magic
 
-CMD ["gunicorn","server:connex_app","-b","0.0.0.0:8000"]
+EXPOSE 5000
+
+CMD ["gunicorn","app_docker:connex_app","-b","0.0.0.0:5000"]

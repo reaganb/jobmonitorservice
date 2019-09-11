@@ -8,118 +8,122 @@ consumes:
 produces:
   - application/json
 
-basePath: /api
+basePath: /service
 
 paths:
-  /jobs:
+  /fileupload:
     get:
-      operationId: views.read_job_all
-      tags:
-        - Jobs
-      summary: Read the entire list of jobs
-      description: Read the list of jobs
+      operationId: fileupload.views.read_files
+      summary: Read all files
+      description: Read all files
       responses:
         200:
-          description: Successfully read jobs list operation
+          description: Read all files success!
           schema:
             type: array
             items:
               properties:
-                job_id:
+                file_size:
                   type: string
-                app_name:
+                file_name:
                   type: string
-                state:
+                file_sha1:
                   type: string
-                timestamp:
+                file_md5:
+                  type: string
+                file_type:
                   type: string
     post:
-      operationId: views.create_job
-      tags:
-        - Jobs
-      summary: Create a new job
-      description: Create a new job
+      operationId: fileupload.views.upload_file
+      summary: Create a file
+      description: Create a file
+      consumes:
+        - multipart/form-data
       parameters:
-        - name: job
-          in: body
-          description: Job to create
-          required: True
-          schema:
-            type: object
-            properties:
-              app_name:
-                type: string
-              state:
-                type: string
+        - in: formData
+          name: upfile
+          type: file
+          description: The file to upload
       responses:
         201:
-          description: Successfully created the job!
-
-  /jobs/{job_id}:
+          description: Create file success!
+  /fileupload/{hash}:
     get:
-      operationId: views.read_job
-      tags:
-        - Jobs
-      summary: Read one job
-      description: Read one job
+      operationId: fileupload.views.read_file
+      summary: Read one file
+      description: Read one file
       parameters:
-        - name: job_id
+        - name: hash
           in: path
-          description: The job id to search
+          description: The hash to search
           type: string
           required: True
       responses:
         200:
-          description: Success!
+          description: File read success!
           schema:
             properties:
-              job_id:
+              file_size:
                 type: string
-              app_name:
+              file_name:
                 type: string
-              state:
+              file_sha1:
                 type: string
-              timestamp:
+              file_md5:
+                type: string
+              file_type:
                 type: string
 
     put:
-      operationId: views.update_job
-      tags:
-        - Jobs
-      summary: Update a job
-      description: Update a job
+      operationId: fileupload.views.update_file
+      summary: Read one file
+      description: Read one file
       parameters:
-        - name: job_id
+        - name: hash
           in: path
-          description: The Job id
-          type: integer
+          description: The hash to search
+          type: string
           required: True
-        - name: job
+        - name: file
           in: body
           schema:
             type: object
             properties:
-              app_name:
+              file_name:
                 type: string
-              state:
+              file_type:
                 type: string
       responses:
         200:
-          description: Update Success!
+          description: File read success!
+          schema:
+            properties:
+              file_size:
+                type: string
+              file_name:
+                type: string
+              file_sha1:
+                type: string
+              file_md5:
+                type: string
+              file_type:
+                type: string
 
     delete:
-      operationId: views.delete_job
-      tags:
-        - Jobs
-      summary: Delete a job
-      description: Delete a job
+      operationId: fileupload.views.delete_file
+      summary: Read one file
+      description: Read one file
       parameters:
-        - name: job_id
+        - name: hash
           in: path
-          type: integer
+          description: The hash to search
+          type: string
           required: True
       responses:
         200:
-          description: Delete Success!
+          description: File delete success!
+
+
+
 
 
